@@ -39,8 +39,15 @@ void AP_MotorsF35B::init(motor_frame_class frame_class, motor_frame_type frame_t
 
 //#if !APM_BUILD_TYPE(APM_BUILD_ArduPlane) // Tilt Rotors do not need a yaw servo
     // find the yaw servo
+/*
     _yaw_servo = SRV_Channels::get_channel_for(SRV_Channel::k_motor7, AP_MOTORS_CH_TRI_YAW));      // _yaw_servo ???
     if (!_yaw_servo) {
+        gcs().send_text(MAV_SEVERITY_ERROR, "MotorsF35B: unable to setup yaw channel");
+        // don't set initialised_ok
+        return;
+    }
+*/
+    if (!SRV_Channels::get_channel_for(SRV_Channel::k_motor7, AP_MOTORS_CH_TRI_YAW)) {
         gcs().send_text(MAV_SEVERITY_ERROR, "MotorsF35B: unable to setup yaw channel");
         // don't set initialised_ok
         return;
