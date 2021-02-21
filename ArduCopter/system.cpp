@@ -472,6 +472,11 @@ void Copter::allocate_motors(void)
             motors_var_info = AP_MotorsTri::var_info;
             AP_Param::set_frame_type_flags(AP_PARAM_FRAME_TRICOPTER);
             break;
+        case AP_Motors::MOTOR_FRAME_F35B:               // NEW
+            motors = new AP_MotorsF35B(copter.scheduler.get_loop_rate_hz());
+            motors_var_info = AP_MotorsF35B::var_info;
+            //AP_Param::set_frame_type_flags(AP_PARAM_FRAME_TRICOPTER);
+            break;
         case AP_Motors::MOTOR_FRAME_SINGLE:
             motors = new AP_MotorsSingle(copter.scheduler.get_loop_rate_hz());
             motors_var_info = AP_MotorsSingle::var_info;
@@ -586,6 +591,7 @@ void Copter::allocate_motors(void)
         attitude_control->get_rate_yaw_pid().kI().set_default(0.015);
         break;
     case AP_Motors::MOTOR_FRAME_TRI:
+    case AP_Motors::MOTOR_FRAME_F35B:               // NEW
         attitude_control->get_rate_yaw_pid().filt_D_hz().set_default(100);
         break;
     default:
