@@ -13,7 +13,7 @@
 #define AP_MOTORS_TRI_SERVO_RANGE_DEG_MIN   5   // minimum angle movement of tail servo in degrees
 #define AP_MOTORS_TRI_SERVO_RANGE_DEG_MAX   80  // maximum angle movement of tail servo in degrees
 
-/// @class      AP_MotorsTri
+/// @class      AP_MotorsF35B
 class AP_MotorsF35B : public AP_MotorsMulticopter {
 public:
 
@@ -53,6 +53,8 @@ public:
     // return the roll factor of any motor, this is used for tilt rotors and tail sitters
     // using copter motors for forward flight
     float               get_roll_factor(uint8_t i) override;
+    
+    const char* get_frame_string() const override { return "F35B"; }
 
 protected:
     // output - sends commands to the motors
