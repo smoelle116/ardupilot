@@ -317,16 +317,20 @@ void AP_MotorsF35B::output_test_seq(uint8_t motor_seq, int16_t pwm)
             rc_write(AP_MOTORS_MOT_1, pwm);
             break;
         case 2:
-            // back motor
-            rc_write(AP_MOTORS_MOT_4, pwm);
-            break;
-        case 3:
-            // back servo
-            rc_write(AP_MOTORS_CH_TRI_YAW, pwm);
-            break;
-        case 4:
             // front left motor
             rc_write(AP_MOTORS_MOT_2, pwm);
+            break;
+        case 3:
+            // front motor
+            rc_write(AP_MOTORS_MOT_3, pwm);
+            break;
+        case 4:
+            // tail motor
+            rc_write(AP_MOTORS_MOT_4, pwm);
+            break;
+        case 7:
+            // tail servo
+            rc_write(AP_MOTORS_CH_TRI_YAW, pwm);
             break;
         default:
             // do nothing
@@ -343,7 +347,7 @@ void AP_MotorsF35B::thrust_compensation(void)
 {
     if (_thrust_compensation_callback) {
         // convert 3 thrust values into an array indexed by motor number
-        float thrust[4] { _thrust_right, _thrust_left, 0, _thrust_rear };       // ???
+        float thrust[4] { _thrust_right, _thrust_left, _thrust_front, _thrust_rear };       // ???
 
         // apply vehicle supplied compensation function
         _thrust_compensation_callback(thrust, 4);           // ???
@@ -351,6 +355,7 @@ void AP_MotorsF35B::thrust_compensation(void)
         // extract compensated thrust values
         _thrust_right = thrust[0];                          // ???
         _thrust_left = thrust[1];
+        _thrust_front = thrust[2];
         _thrust_rear = thrust[3];
     }
 }
